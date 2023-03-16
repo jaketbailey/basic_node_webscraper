@@ -3,7 +3,6 @@ const fs = require('fs');
 const keywordsJSON = JSON.parse(fs.readFileSync('./keywords.json', 'utf8'));
 
 const init = async () => {
-
     const getLink = (keyword, page) => { // Generates the PEARL link based on query (keyword) and page number
         const query = keyword.replace(/\s/g, '+')
         return(`https://pearl.plymouth.ac.uk/handle/10026.1/10912/discover?rpp=10&etal=0&query=${query}&group_by=none&page=${page}`);
@@ -22,7 +21,7 @@ const init = async () => {
                 const titleNode = $(elem).find('a')
                 const infoNode = $(elem).find('.artifact-info')
 
-                const artifact = { // Object representing the current artefact/research
+                const artifact = { // Object representing the current artifact/research
                     title: '',
                     href: '',
                     author: '',
