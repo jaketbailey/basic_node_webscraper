@@ -3,16 +3,16 @@ const fs = require('fs');
 const keywordsJSON = JSON.parse(fs.readFileSync('./keywords.json', 'utf8'));
 
 const init = async () => {
-    const getLink = (keyword, page) => { // Generates the PEARL link based on query (keyword) and page number
+    const getLink = (keyword, page, resultsPerPage) => { // Generates the PEARL link based on query (keyword) and page number
         const query = keyword.replace(/\s/g, '+')
-        return(`https://pearl.plymouth.ac.uk/handle/10026.1/10912/discover?rpp=10&etal=0&query=${query}&group_by=none&page=${page}`);
+        return(`https://pearl.plymouth.ac.uk/handle/10026.1/10912/discover?rpp=${resultsPerPage}&etal=0&query=${query}&group_by=none&page=${page}`);
     }
 
     let csvList = []; // The array used to store all lines of the CSV file to be created
     for (const keyword of keywordsJSON.keywords) {
         console.log(`Currently scraping keyword: ${keyword}`)
-        for (let i = 0; i <= 5; i++){ //Put up to 5 pages for now, can increase if you wish.
-            const link = getLink(keyword, i)
+        for (let i = 0; i <= 1; i++){ //Put up to 1 pages for now, can increase if you wish.
+            const link = getLink(keyword, i, 100)
             const response = await fetch(link)
             const body = await response.text();
             const $ = cheerio.load(body);
