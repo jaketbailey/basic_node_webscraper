@@ -1,11 +1,12 @@
 {
     "keywords": [
-        "Maritime",
-        "Navy",
-        "Royal Navy",
-        "Air",
-        "Space",
-        "Radar",
-        "Sensor"
+        "Maritime"
+    ],
+    "URLs": [
+        "https://pearl.plymouth.ac.uk",
+        "https://qmro.qmul.ac.uk/xmlui",
+        "https://dspace.lib.cranfield.ac.uk",
+        "https://era.ed.ac.uk",
+        "https://www.repository.cam.ac.uk/discover"
     ]
 }
