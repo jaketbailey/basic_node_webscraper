@@ -7,10 +7,10 @@ const init = async () => {
         const query = keyword.replace(/\s/g, '+')
         return(`${URL}/discover?rpp=${resultsPerPage}&etal=0&query=${query}&group_by=none&page=${page}`);
     }
-
+    let i = 0;
     for (const URL of keywordsJSON.URLs) {
         let csvList = []; // The array used to store all lines of the CSV file to be created
-        const universityName = URL.split('.')[1];
+        const universityName = keywordsJSON.uniNames[i];
         for (const keyword of keywordsJSON.keywords) {
             console.log(`Currently scraping keyword: ${keyword}, University: ${universityName}`)
             for (let i = 0; i <= 1; i++){ //Put up to 1 pages for now, can increase if you wish.
@@ -60,7 +60,6 @@ const init = async () => {
             });
         }
 
-        console.log(URL.split('.')[1])
         const file = fs.createWriteStream(`${universityName}.csv`); // Creates the file to store the scraped research info
         file.on('error', function(err) { throw err });
         file.write('sep=_\n'); // Specifies '_' delimiter
@@ -69,6 +68,7 @@ const init = async () => {
             file.write(`${item}\n`);
         }
         file.end();
+        i += 1;
     }
 
 }

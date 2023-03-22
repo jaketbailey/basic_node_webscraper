@@ -8,5 +8,12 @@
         "https://dspace.lib.cranfield.ac.uk",
         "https://era.ed.ac.uk",
         "https://www.repository.cam.ac.uk/discover"
+    ],
+    "uniNames": [
+        "plymouth",
+        "queem mary",
+        "cranfield",
+        "edinburgh",
+        "cambridge"
     ]
 }
