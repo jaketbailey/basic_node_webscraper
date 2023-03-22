@@ -1,6 +1,6 @@
 const cheerio = require("cheerio");
 const fs = require('fs');
-const keywordsJSON = JSON.parse(fs.readFileSync('./keywords.json', 'utf8'));
+const infoJSON = JSON.parse(fs.readFileSync('./info.json', 'utf8'));
 
 const init = async () => {
     const getLink = (URL, keyword, page, resultsPerPage) => { // Generates the PEARL link based on query (keyword) and page number
@@ -8,10 +8,10 @@ const init = async () => {
         return(`${URL}/discover?rpp=${resultsPerPage}&etal=0&query=${query}&group_by=none&page=${page}`);
     }
     let i = 0;
-    for (const URL of keywordsJSON.URLs) {
+    for (const URL of infoJSON.URLs) {
         let csvList = []; // The array used to store all lines of the CSV file to be created
-        const universityName = keywordsJSON.uniNames[i];
-        for (const keyword of keywordsJSON.keywords) {
+        const universityName = infoJSON.uniNames[i];
+        for (const keyword of infoJSON.keywords) {
             console.log(`Currently scraping keyword: ${keyword}, University: ${universityName}`)
             for (let i = 0; i <= 1; i++){ //Put up to 1 pages for now, can increase if you wish.
                 const link = getLink(URL, keyword, i, 100)
