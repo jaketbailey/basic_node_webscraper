@@ -3,6 +3,9 @@ const fs = require('fs');
 const infoJSON = JSON.parse(fs.readFileSync('./info.json', 'utf8'));
 
 const init = async () => {
+    const file = fs.createWriteStream('research.csv'); // Creates the file to store the scraped research info
+    file.write('Title,Href,Author,Date,Abstract,Keyword,University Name\n'); // Adds Titles to each row in the CSV
+
     const getLink = (URL, keyword, page, resultsPerPage) => { // Generates the PEARL link based on query (keyword) and page number
         const query = keyword.replace(/\s/g, '+')
         return(`${URL}/discover?rpp=${resultsPerPage}&etal=0&query=${query}&group_by=none&page=${page}`);
@@ -30,6 +33,7 @@ const init = async () => {
                         date: '',
                         abstract: '',
                         keyword,
+                        universityName
                     };
 
                     // Below assigns all the relevant content from the Div to artifact object
@@ -40,6 +44,7 @@ const init = async () => {
                     artifact.date = infoNode.find('.publisher-date').text();
                     artifact.abstract = infoNode.find('.abstract').text();
                     artifact.abstract = (artifact.abstract).replace(/\r?\n|\r/g, " "); //remove new line
+                    artifact.abstract = artifact.abstract.replace(/"/g, "'");
 
                     let csvString = '';
 
@@ -60,17 +65,13 @@ const init = async () => {
             });
         }
 
-        const file = fs.createWriteStream(`${universityName}.csv`); // Creates the file to store the scraped research info
         file.on('error', function(err) { throw err });
-        file.write('sep=_\n'); // Specifies '_' delimiter
-        file.write('Title,Href,Author,Date,Abstract,Keyword\n'); // Adds Titles to each row in the CSV
         for (const item of csvList) { // Writes the array to the CSV
             file.write(`${item}\n`);
         }
-        file.end();
         i += 1;
     }
-
+    file.end();
 }
 
 init();
