@@ -45,9 +45,9 @@ const init = async () => {
 
                     for (const [key, value] of Object.entries(artifact)) { // Loops throught the artifact object and generates a CSV string using '_' delimiter
                         if (key === 'title') {
-                            csvString += value;
+                            csvString += `"${value}"`;
                         } else {
-                            csvString += `_${value}`;
+                            csvString += `,"${value}"`;
                         }
                     }
 
@@ -63,7 +63,7 @@ const init = async () => {
         const file = fs.createWriteStream(`${universityName}.csv`); // Creates the file to store the scraped research info
         file.on('error', function(err) { throw err });
         file.write('sep=_\n'); // Specifies '_' delimiter
-        file.write('Title_Href_Author_Date_Abstract_Keyword\n'); // Adds Titles to each row in the CSV
+        file.write('Title,Href,Author,Date,Abstract,Keyword\n'); // Adds Titles to each row in the CSV
         for (const item of csvList) { // Writes the array to the CSV
             file.write(`${item}\n`);
         }
