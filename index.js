@@ -39,7 +39,7 @@ const init = async () => {
                     // Below assigns all the relevant content from the Div to artifact object
                     artifact.title = (titleNode.text())
                     artifact.title = (artifact.title).replace(/\r?\n|\r/g, " "); //remove new line
-                    artifact.href = titleNode.attr('href')
+                    artifact.href = `${URL}${titleNode.attr('href')}`
                     artifact.author =  infoNode.find('.author').text();
                     artifact.date = infoNode.find('.publisher-date').text();
                     artifact.abstract = infoNode.find('.abstract').text();
